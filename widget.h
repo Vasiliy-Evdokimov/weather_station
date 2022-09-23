@@ -1,7 +1,7 @@
-#include "common.h"
-
 #ifndef WIDGET_H
 #define WIDGET_H
+
+#include "common.h"
 
 struct Widget {
     char caption[CAPTION_LENGTH] = "";

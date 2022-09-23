@@ -1,7 +1,4 @@
 #include "menu.h"
-#include "sensor.h"
-#include "screen.h"
-#include "plot.h"
 
 extern TFT TFTscreen;
 extern encoderStruct encoder;

@@ -1,13 +1,4 @@
-#include "common.h"
 #include "screen.h"
-
-#include "menu.h"
-#include "widget.h"
-#include "timer.h"
-#include "sensor.h"
-#include "plot.h"
-#include "monitor.h"
-#include "smallHT.h"
 
 Widget screen;
 

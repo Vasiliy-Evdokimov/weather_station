@@ -1,8 +1,8 @@
-#include "common.h"
-#include <DHT.h>
-
 #ifndef SENSOR_H
 #define SENSOR_H
+
+#include "common.h"
+#include <DHT.h>
 
 #define SENSOR_DATA_LENGTH 30
 

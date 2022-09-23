@@ -1,5 +1,3 @@
-#include "common.h"
-#include "widget.h"
 #include "timer.h"
 
 #define TIMER_PERIOD 30

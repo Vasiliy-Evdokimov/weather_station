@@ -1,9 +1,5 @@
 #include "plot.h"
 
-#include "common.h"
-#include "sensor.h"
-#include "widget.h"
-
 #define PLOT_START_X 65
 #define PLOT_START_Y 60
 #define PLOT_LEGEND_STEP 20

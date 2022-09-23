@@ -1,6 +1,4 @@
 #include "monitor.h"
-#include "widget.h"
-#include "sensor.h"
 
 Widget mainWindow;
 

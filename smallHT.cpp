@@ -1,6 +1,4 @@
 #include "smallHT.h"
-#include "widget.h"
-#include "sensor.h"
 
 Widget smallHT;
 

@@ -1,7 +1,10 @@
-#include "common.h"
-
 #ifndef MENU_H
 #define MENU_H
+
+#include "common.h"
+#include "sensor.h"
+#include "screen.h"
+#include "plot.h"
 
 #define MENU_SIZE 11
 
