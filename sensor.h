@@ -19,17 +19,17 @@ struct Sensor
     short FMinValue = 0;
     short FMaxValue = 0;
   public:  
-    String getCaption();
-    String getMeasurement();
-    uint32_t getColor();
-    void_function_pointer getPlotFunction();
+    String getCaption() const;
+    String getMeasurement() const;
+    uint32_t getColor() const;
+    void_function_pointer getPlotFunction() const;
     //
     void addNewValue(float aValue);
-    short getValue(int aIndex);
-    short getCurrentValue();
-    short getMinValue();
-    short getMaxValue();
-    bool isChanged();
+    short getValue(int aIndex) const;
+    short getCurrentValue() const;
+    short getMinValue() const;
+    short getMaxValue() const;
+    bool isChanged() const;
     //
     static String ValueToString(short aValue);
     //

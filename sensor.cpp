@@ -12,68 +12,69 @@ Sensor sensors[SENSORS_SIZE] =
 Sensor* temperature = &sensors[0];
 Sensor* humidity = &sensors[1];
 
-String Sensor::getCaption()
+String Sensor::getCaption() const
 {
   return FCaption;
 }
 
-String Sensor::getMeasurement()
+String Sensor::getMeasurement() const
 {
   return FMeasurement;
 }
 
-uint32_t Sensor::getColor()
+uint32_t Sensor::getColor() const
 {
   return FColor;
 }
 
-void_function_pointer Sensor::getPlotFunction()
+void_function_pointer Sensor::getPlotFunction() const
 {
   return FPlotFunction;
 }
 
 void Sensor::addNewValue(float aValue)
 {
-	short newValue = (short)(aValue * 10);
+	short newValue = static_cast<short>(aValue * 10);
   if (newValue < FMinValue)	FMinValue = newValue;
   if (newValue > FMaxValue) FMaxValue = newValue;
   //
-	for (int i = SENSOR_DATA_LENGTH - 1 ; i > 0 ; i--)
-		FValues[i] = FValues[i - 1];	
-	//
+  memmove(&FValues[1], &FValues[0], (SENSOR_DATA_LENGTH - 1) * sizeof(*FValues));	
+  //
   FValues[0] = newValue;
 }
 
-short Sensor::getValue(int aIndex)
+short Sensor::getValue(int aIndex) const
 {
   if ((aIndex < 0) || (aIndex >= SENSOR_DATA_LENGTH))
     return 0;
   return FValues[aIndex];  
 }
 
-short Sensor::getMinValue()
+short Sensor::getMinValue() const
 {
   return FMinValue;  
 }
 
-short Sensor::getMaxValue()
+short Sensor::getMaxValue() const
 {
   return FMaxValue;
 }
 
-short Sensor::getCurrentValue()
+short Sensor::getCurrentValue() const
 {
   return getValue(0);
 }
 
-bool Sensor::isChanged()
+bool Sensor::isChanged() const
 {
   return (getValue(0) != getValue(1));
 }
 
 String Sensor::ValueToString(short aValue)
 {
-  return (String)(aValue / 10) + "." + (String)(aValue % 10);
+  return
+    static_cast<String>(aValue / 10) + "." +
+    static_cast<String>(aValue % 10);
 }
 
 void readSensors()
