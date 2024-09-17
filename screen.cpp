@@ -12,7 +12,7 @@ extern TFT TFTscreen;
 extern encoderStruct encoder;
 
 extern Widget mainMenu;
-extern MenuItem menu[MENU_SIZE];
+extern MenuItem menu[];
 
 extern Widget mainWindow;
 extern Widget plotWindow;
@@ -23,11 +23,14 @@ Widget* htWindowWidgets[] = {&smallHT, &mainWindow, &plotWindow};
 Widget* windowWidgets[] = {&smallHT, &mainWindow, &plotWindow, &timerWindow};
 Widget* currentWindow; 
 
-extern Sensor temperature;
-extern Sensor humidity;
-
 void drawHTWindows() {
-  flRedraw = temperature.hasChanged() || humidity.hasChanged();  
+  flRedraw = false;
+  for (int i = 0; i < SENSORS_SIZE; i++)
+  {
+    flRedraw = flRedraw || sensors[i].isChanged();
+    if (flRedraw) break;
+  }
+  //
   mainMenu.redraw = flRedraw;
   for (int i = 0; i < 3; i++)
     if (htWindowWidgets[i]->isVisible)
@@ -123,8 +126,7 @@ void screenInit() {
 	screen.handleButton = screenHandleButton;
 	screen.handleEncoder = screenHandleEncoder;
 	//  
-	initMainMenu();
-  initSensors();
+	initMainMenu();  
   //
   initTimer();   
   initPlot();

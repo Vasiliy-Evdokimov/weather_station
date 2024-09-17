@@ -6,7 +6,7 @@
 #include "screen.h"
 #include "plot.h"
 
-#define MENU_SIZE 11
+extern const int MENU_SIZE;
 
 typedef struct MenuItem
 {
@@ -44,5 +44,8 @@ typedef struct MenuItem
 void initMainMenu();
 
 void mainMenuCollapse();
+
+void showTemperaturePlot();
+void showHumidityPlot();
 
 #endif

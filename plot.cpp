@@ -90,11 +90,11 @@ void plotDraw() {
     byte symbolHeight = getSymbolHeight(plotWindow.textSize);
     //
     TFTscreen.setTextSize(plotWindow.textSize);
-    colorToRGB(currentSensor->color, &r, &g, &b);
+    colorToRGB(currentSensor->getColor(), &r, &g, &b);
     //    
     if (flRedraw) {
   		drawWindowBorder(&plotWindow);      
-      line = currentSensor->caption;    
+      line = currentSensor->getCaption();    
       line.toCharArray(printout, line.length() + 1);
       x = getTextCenterAlignmentX(line, plotWindow.width, 1);
       TFTscreen.stroke(CLR_WHITE);
@@ -103,7 +103,7 @@ void plotDraw() {
     //
     short currV = currentSensor->getCurrentValue();
     if ((currV != prevV) || flRedraw) {
-      line = convertValueToStr(currV);
+      line = Sensor::ValueToString(currV);
       len = line.length();
       line.toCharArray(printout, len + 1);
       x = getTextCenterAlignmentX(line, plotWindow.width, 1);
@@ -118,8 +118,8 @@ void plotDraw() {
       TFTscreen.text(printout, x, currV_y);    
     }    
 		//
-    short min_value = currentSensor->min_value / 10;  
-    short max_value = currentSensor->max_value / 10;
+    short min_value = currentSensor->getMinValue() / 10;  
+    short max_value = currentSensor->getMaxValue() / 10;
     //    
     yLow = (min_value / 10) * 10;
     yHigh = ((max_value / 10) + 1) * 10;

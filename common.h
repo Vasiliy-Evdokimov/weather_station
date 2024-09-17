@@ -22,6 +22,8 @@
 
 #define CAPTION_LENGTH 15
 
+typedef void(*void_function_pointer)();
+
 struct encoderStruct {
   RotaryEncoder* _encoder;
   //

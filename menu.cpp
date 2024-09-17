@@ -9,14 +9,13 @@ extern Widget mainWindow;
 extern Widget plotWindow;
 extern Widget timerWindow;
 
-extern Sensor temperature;
-extern Sensor humidity;
-
 extern bool flRedraw;
 
 extern Widget screen;
 
 extern bool goSleepScreen;
+
+const int MENU_SIZE = 9 + SENSORS_SIZE;
 
 Widget mainMenu;
 
@@ -123,12 +122,12 @@ void showMonitor() {
 }
 
 void showTemperaturePlot() {
-  togglePlotSensor(&temperature);
+  togglePlotSensor(temperature);
   screenShowWidget(&plotWindow);
 }
 
 void showHumidityPlot() {
-  togglePlotSensor(&humidity);
+  togglePlotSensor(humidity);
   screenShowWidget(&plotWindow);
 }
 
@@ -155,22 +154,30 @@ void initMainMenu() {
   mainMenu.handleEncoder = mainMenuHandleEncoder;
   mainMenu.handleButton = mainMenuHandleButton;
   //
-  menu[0].fill(mainMenu.caption, NULL);
-  menu[0].isHighlighted = true;
+  int i = 0;
   //
-  menu[1].fill("MONITOR", &menu[0], showMonitor);
+  menu[i].fill(mainMenu.caption, NULL);
+  menu[i++].isHighlighted = true;
   //
-  menu[2].fill("SENSORS", &menu[0]);
-  menu[3].fill("TEMPERATURE", &menu[2], showTemperaturePlot);
-  menu[4].fill("HUMIDITY", &menu[2], showHumidityPlot);
-  menu[5].fill("..", &menu[2]);
+  menu[i++].fill("MONITOR", &menu[0], showMonitor);
   //
-  menu[6].fill("SETTINGS", &menu[0]);
-  menu[7].fill("SLEEP TIMER", &menu[6], showTimerWindow);
-  menu[8].fill("SLEEP NOW", &menu[6], goSleep);
-  menu[9].fill("..", &menu[6]);
+  menu[i++].fill("SENSORS", &menu[0]);
   //
-  menu[10].fill("..", &menu[0]);
+  char buf[CAPTION_LENGTH] = {0};
+  for (int j = 0; j < SENSORS_SIZE; j++)
+  {
+    sensors[j].getCaption().toCharArray(buf, CAPTION_LENGTH);
+    menu[i++].fill(buf, &menu[2], sensors[j].getPlotFunction());
+  }
+  //
+  menu[i++].fill("..", &menu[2]);
+  //
+  menu[i++].fill("SETTINGS", &menu[0]);
+  menu[i++].fill("SLEEP TIMER", &menu[6], showTimerWindow);
+  menu[i++].fill("SLEEP NOW", &menu[6], goSleep);
+  menu[i++].fill("..", &menu[6]);
+  //
+  menu[i++].fill("..", &menu[0]);
 }
 
 byte MenuItem::GetIndex() {
@@ -189,7 +196,8 @@ byte MenuItem::GetIndex() {
 	return res;
 }
 
-void MenuItem::fill(const char aCaption[], MenuItem* aParent, void(*aAction)() = NULL) {
+void MenuItem::fill(const char aCaption[], MenuItem* aParent, void_function_pointer aAction = NULL) //  void(*aAction)()
+{
 	strcpy(caption, aCaption);
 	parent = aParent;
   action = aAction;
