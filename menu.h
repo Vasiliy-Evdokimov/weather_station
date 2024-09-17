@@ -45,6 +45,7 @@ void initMainMenu();
 
 void mainMenuCollapse();
 
+void showPlot(Sensor* aSensor);
 void showTemperaturePlot();
 void showHumidityPlot();
 

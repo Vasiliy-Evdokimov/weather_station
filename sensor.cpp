@@ -9,8 +9,8 @@ Sensor sensors[SENSORS_SIZE] =
     { "HUMIDITY", "%", 0x0000FF, showHumidityPlot }
   };
 
-Sensor* temperature = &sensors[0];
-Sensor* humidity = &sensors[1];
+Sensor* getTemperatureSensor() { return &sensors[0]; }
+Sensor* getHumiditySensor() { return &sensors[1]; }
 
 String Sensor::getCaption() const
 {
@@ -79,6 +79,13 @@ String Sensor::ValueToString(short aValue)
 
 void readSensors()
 {
-  temperature->addNewValue(dht.readTemperature());
-  humidity->addNewValue(dht.readHumidity());
+  getTemperatureSensor()->addNewValue(dht.readTemperature());
+  getHumiditySensor()->addNewValue(dht.readHumidity());
+}
+
+Sensor* getSensorByIndex(int aIndex)
+{
+  if ((aIndex < 0) || (aIndex >= SENSORS_SIZE))
+    return nullptr;
+  return &sensors[aIndex];
 }

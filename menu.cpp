@@ -121,14 +121,18 @@ void showMonitor() {
   screenShowWidget(&mainWindow);
 }
 
-void showTemperaturePlot() {
-  togglePlotSensor(temperature);
+void showPlot(Sensor* aSensor) {
+  if (!aSensor) return;  
+  togglePlotSensor(aSensor);
   screenShowWidget(&plotWindow);
 }
 
+void showTemperaturePlot() {
+  showPlot(getTemperatureSensor());  
+}
+
 void showHumidityPlot() {
-  togglePlotSensor(humidity);
-  screenShowWidget(&plotWindow);
+  showPlot(getHumiditySensor());  
 }
 
 void showTimerWindow() {
@@ -165,10 +169,11 @@ void initMainMenu() {
   //
   char buf[CAPTION_LENGTH] = {0};
   for (int j = 0; j < SENSORS_SIZE; j++)
-  {
-    sensors[j].getCaption().toCharArray(buf, CAPTION_LENGTH);
-    menu[i++].fill(buf, &menu[2], sensors[j].getPlotFunction());
-  }
+    if (Sensor* sensor = getSensorByIndex(j))
+    {  
+      sensor->getCaption().toCharArray(buf, CAPTION_LENGTH);
+      menu[i++].fill(buf, &menu[2], sensor->getPlotFunction());
+    }
   //
   menu[i++].fill("..", &menu[2]);
   //

@@ -26,10 +26,11 @@ Widget* currentWindow;
 void drawHTWindows() {
   flRedraw = false;
   for (int i = 0; i < SENSORS_SIZE; i++)
-  {
-    flRedraw = flRedraw || sensors[i].isChanged();
-    if (flRedraw) break;
-  }
+    if (Sensor* sensor = getSensorByIndex(i))
+    {
+      flRedraw = flRedraw || sensor->isChanged();
+      if (flRedraw) break;
+    }
   //
   mainMenu.redraw = flRedraw;
   for (int i = 0; i < 3; i++)

@@ -11,14 +11,15 @@ void smallHTDraw() {
   bool update_flags[SENSORS_SIZE * 2];
   //
   for (int i = 0; i < SENSORS_SIZE; i++)
-  {
-    lines[i * 2] = Sensor::ValueToString(sensors[i].getCurrentValue());
-    lines[i * 2 + 1] = sensors[i].getMeasurement();
-    colors[i * 2] = sensors[i].getColor();
-    colors[i * 2 + 1] = sensors[i].getColor();
-    update_flags[i * 2] = sensors[i].isChanged();
-    update_flags[i * 2 + 1] = 0;
-  }
+    if (Sensor* sensor = getSensorByIndex(i))
+    {
+      lines[i * 2] = Sensor::ValueToString(sensor->getCurrentValue());
+      lines[i * 2 + 1] = sensor->getMeasurement();
+      colors[i * 2] = sensor->getColor();
+      colors[i * 2 + 1] = sensor->getColor();
+      update_flags[i * 2] = sensor->isChanged();
+      update_flags[i * 2 + 1] = 0;
+    }
   //
 	byte symbolWidth = getSymbolWidth(smallHT.textSize);
 	byte symbolHeight = getSymbolHeight(smallHT.textSize);

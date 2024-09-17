@@ -39,9 +39,8 @@ struct Sensor
 
 void readSensors();
 
-extern Sensor sensors[];
-
-extern Sensor* temperature; 
-extern Sensor* humidity;
+Sensor* getSensorByIndex(int aIndex);
+Sensor* getTemperatureSensor();
+Sensor* getHumiditySensor();
 
 #endif

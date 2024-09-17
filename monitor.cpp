@@ -20,14 +20,15 @@ void mainWindowDraw()
   bool update_flags[SENSORS_SIZE * 2];
   //
   for (int i = 0; i < SENSORS_SIZE; i++)
-  {
-    lines[i * 2] = sensors[i].getCaption() + ", " + sensors[i].getMeasurement();
-    lines[i * 2 + 1] = Sensor::ValueToString(sensors[i].getCurrentValue());
-    colors[i * 2] = 0xFFFFFF;
-    colors[i * 2 + 1] = sensors[i].getColor();
-    update_flags[i * 2] = 0;
-    update_flags[i * 2 + 1] = sensors[i].isChanged();
-  }  
+    if (Sensor* sensor = getSensorByIndex(i))
+    {    
+      lines[i * 2] = sensor->getCaption() + ", " + sensor->getMeasurement();
+      lines[i * 2 + 1] = Sensor::ValueToString(sensor->getCurrentValue());
+      colors[i * 2] = 0xFFFFFF;
+      colors[i * 2 + 1] = sensor->getColor();
+      update_flags[i * 2] = 0;
+      update_flags[i * 2 + 1] = sensor->isChanged();
+    }  
 	//	
 	String line;
 	char printout[100];
